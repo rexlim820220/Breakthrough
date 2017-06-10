@@ -7,6 +7,9 @@ using namespace std;
 
 enum Color {black,white};
 
+const int SCREEN_WIDTH = 600;
+const int SCREEN_HEIGHT = 600;
+
 class Bitboard
 {
 public:
@@ -15,7 +18,7 @@ public:
         whitepawn=0xffff000000000000;
         blackpawn=0x000000000000ffff;
     }
-    Bitboard make_move(int,int,int);
+    Bitboard make_move(int,int,int,Bitboard);
     bool endgame();
     void showboard();
     float Evaulate(int color);
@@ -25,7 +28,7 @@ private:
     uint64_t blackpawn;
 };
 
-Bitboard Bitboard::make_move(int x,int y,int color)
+Bitboard Bitboard::make_move(int x,int y,int color,Bitboard board)
 {
     if(color==Color::black)
     {
@@ -46,6 +49,7 @@ Bitboard Bitboard::make_move(int x,int y,int color)
         whitepawn=whitepawn|b;
         showboard();
     }
+    return board;
 }
 
 void Bitboard::showboard()
@@ -79,7 +83,7 @@ float Bitboard::Evaulate(int color)
         {
             for(int j=i*8; j<i*8+8; j++)
             {
-                if(blackpawn&(1<<j)==0)
+                if((blackpawn&(1<<j))==0)
                 {
                     /*no pawn*/;
                 }
@@ -97,7 +101,7 @@ float Bitboard::Evaulate(int color)
         {
             for(int j=i*8; j<i*8+8; j++)
             {
-                if(whitepawn&(1<<j)==0)
+                if((whitepawn&(1<<j))==0)
                 {
                     /*no pawn*/;
                 }
@@ -133,7 +137,7 @@ bool Bitboard::endgame()
 
 int NegaMax(int depth,Bitboard board,int color)
 {
-    int value;
+    int value=0;
     int best=-1e6;
     if(depth<=0||board.endgame())
     {
@@ -143,7 +147,7 @@ int NegaMax(int depth,Bitboard board,int color)
     int x=0,y=0;
     while(!board.endgame())
     {
-        board.make_move(x,y,color);
+        board.make_move(x,y,color,board);
         value=-NegaMax(depth-1,board,color);
         //unmakemove;
         if(value>best)
@@ -154,13 +158,76 @@ int NegaMax(int depth,Bitboard board,int color)
     return best;
 }
 
+bool init(),loadMedia();
+
+void close();
+
+SDL_Window* gWindow = NULL;
+SDL_Surface* gScreenSurface = NULL;
+SDL_Surface* gXOut = NULL;
+SDL_Surface* bpawn = NULL,* wpawn = NULL;
+
+bool init()
+{
+	bool success = true;
+
+	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+	{
+		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+		success = false;
+	}
+	else
+	{
+		gWindow = SDL_CreateWindow( "Breakthrough", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		if( gWindow == NULL )
+		{
+			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+			success = false;
+		}
+		else
+		{
+			gScreenSurface = SDL_GetWindowSurface( gWindow );
+		}
+	}
+	return success;
+}
+
+bool loadMedia()
+{
+	bool success = true;
+
+	gXOut = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
+	bpawn = SDL_LoadBMP( "04_key_presses/down.bmp" );
+	wpawn = SDL_LoadBMP( "04_key_presses/left.bmp" );
+	if( gXOut == NULL )
+	{
+		printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
+		success = false;
+	}
+    if(( bpawn == NULL )&&( wpawn == NULL ))
+	{
+		printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
+		success = false;
+	}
+
+	return success;
+}
+
+void close()
+{
+	SDL_FreeSurface( gXOut );
+	gXOut = NULL;
+
+	SDL_DestroyWindow( gWindow );
+	gWindow = NULL;
+
+	SDL_Quit();
+}
+
+
 int main(int argc,char **argv)
 {
     Bitboard bitboard;
-    SDL_Surface *hello = NULL;
-    SDL_Surface *screen = NULL;
-    SDL_Init(SDL_INIT_EVERYTHING);
-    /*Start SDL*/
     int pos_x=0,pos_y=0,i=0,color=1;
     cout<<"First,or second?"<<endl;
     cin>>color;
@@ -168,12 +235,9 @@ int main(int argc,char **argv)
     {
         color=1;
     }
-    SDL_Window *window=SDL_CreateWindow("Breakthrough",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,640,480,0);
-    screen = SDL_GetWindowSurface(window);
-    hello = SDL_LoadBMP("hello.bmp");
     while(!bitboard.endgame())
     {
-        cin>>pos_x>>pos_y;
+        /*cin>>pos_x>>pos_y;
         if((pos_x<48||pos_x>55)||(pos_y<40||pos_y>47))
         {
             pos_x=48+i;
@@ -183,15 +247,39 @@ int main(int argc,char **argv)
             {
                 i*=(-1);
             }
+        }*/
+        if(!init())
+        {
+            /*Start SDL*/
+            cout<<"Failed to initialize!"<<endl;
+        }
+        else
+        {
+            if( !loadMedia() )
+            {
+                cout<<"Failed to load media!"<<endl;
+            }
+            else
+            {
+                bool quit = false;
+                SDL_Event e;
+                while( !quit )
+                {
+                    while( SDL_PollEvent( &e ) != 0 )
+                    {
+                        if( e.type == SDL_QUIT )
+                        {
+                            quit = true;
+                        }
+                    }
+                    SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
+                    SDL_UpdateWindowSurface( gWindow );
+                    SDL_Delay( 2000 );
+                }
+            }
         }
         system("cls");
-        bitboard.make_move(pos_x,pos_y,color);
-        cout<<endl;
-        SDL_BlitSurface(hello,NULL,screen,NULL);
-        SDL_Renderer *renderer=SDL_CreateRenderer(window,-1,0);
-        SDL_SetRenderDrawColor(renderer,255,255,0,255);
-        SDL_RenderClear(renderer);
-        SDL_Delay(200);
+        bitboard.make_move(pos_x,pos_y,color,bitboard);
         if(color==0)
         {
             color=1;
@@ -201,8 +289,8 @@ int main(int argc,char **argv)
             color=0;
         }
     }
-    SDL_FreeSurface(hello);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    close();
     return 0;
 }
+
+
