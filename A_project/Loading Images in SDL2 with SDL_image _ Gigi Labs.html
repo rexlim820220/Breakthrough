@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/ -->
+<html lang="en-US"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width">
+	<title>Loading Images in SDL2 with SDL_image | Gigi Labs</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="http://gigi.nullneuron.net/gigilabs/xmlrpc.php">
+	<!--[if lt IE 9]>
+	<script src="http://gigi.nullneuron.net/gigilabs/wp-content/themes/twentyfourteen/js/html5.js"></script>
+	<![endif]-->
+	<link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://s.gravatar.com/">
+<link rel="dns-prefetch" href="http://platform.twitter.com/">
+<link rel="dns-prefetch" href="http://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Gigi Labs » Feed" href="http://gigi.nullneuron.net/gigilabs/feed/">
+<link rel="alternate" type="application/rss+xml" title="Gigi Labs » Comments Feed" href="http://gigi.nullneuron.net/gigilabs/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Gigi Labs » Loading Images in SDL2 with SDL_image Comments Feed" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/feed/">
+		<script id="facebook-jssdk" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/all.js.下載"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/gigi.nullneuron.net\/gigilabs\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
+			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/wp-emoji-release.min.js.下載" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="twentyfourteen-jetpack-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/twentyfourteen.css" type="text/css" media="all">
+<link rel="stylesheet" id="easy-facebook-likebox-plugin-styles-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/public.css" type="text/css" media="all">
+<link rel="stylesheet" id="easy-facebook-likebox-popup-styles-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/magnific-popup.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfourteen-lato-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfourteen-style-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/style.css" type="text/css" media="all">
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentyfourteen-ie-css'  href='http://gigi.nullneuron.net/gigilabs/wp-content/themes/twentyfourteen/css/ie.css?ver=20131205' type='text/css' media='all' />
+<![endif]-->
+<link rel="stylesheet" id="jetpack_css-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jquery.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jquery-migrate.min.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jquery.magnific-popup.min.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jquery.cookie.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/public.js.下載"></script>
+<link rel="https://api.w.org/" href="http://gigi.nullneuron.net/gigilabs/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://gigi.nullneuron.net/gigilabs/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://gigi.nullneuron.net/gigilabs/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Connecting to RabbitMQ Across Machines with .NET Client" href="http://gigi.nullneuron.net/gigilabs/connecting-to-rabbitmq-across-machines-with-net-client/">
+<link rel="next" title="Resilient Connections with RabbitMQ .NET Client" href="http://gigi.nullneuron.net/gigilabs/resilient-connections-with-rabbitmq-net-client/">
+<meta name="generator" content="WordPress 4.8">
+<link rel="canonical" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/">
+<link rel="shortlink" href="http://wp.me/p5fUJH-eZ">
+<link rel="alternate" type="application/json+oembed" href="http://gigi.nullneuron.net/gigilabs/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fgigi.nullneuron.net%2Fgigilabs%2Floading-images-in-sdl2-with-sdl_image%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://gigi.nullneuron.net/gigilabs/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fgigi.nullneuron.net%2Fgigilabs%2Floading-images-in-sdl2-with-sdl_image%2F&amp;format=xml">
+
+<link rel="dns-prefetch" href="http://v0.wordpress.com/">
+<link rel="dns-prefetch" href="http://widgets.wp.com/">
+<link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://0.gravatar.com/">
+<link rel="dns-prefetch" href="http://1.gravatar.com/">
+<link rel="dns-prefetch" href="http://2.gravatar.com/">
+<style type="text/css">img#wpstats{display:none}</style>		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Loading Images in SDL2 with SDL_image">
+<meta property="og:url" content="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/">
+<meta property="og:description" content="This article was originally posted as “SDL2: Loading Images with SDL_image” on 25th November 2013 at Programmer’s Ranch, and has been updated before being reposted here. The sourc…">
+<meta property="article:published_time" content="2015-11-06T17:16:06+00:00">
+<meta property="article:modified_time" content="2015-11-04T22:02:48+00:00">
+<meta property="og:site_name" content="Gigi Labs">
+<meta property="og:image" content="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result.png">
+<meta property="og:image:width" content="656">
+<meta property="og:image:height" content="518">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:partner" content="tfwp"><link rel="stylesheet" type="text/css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/shCore.css"><link rel="stylesheet" type="text/css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Loading Images in SDL2 with SDL_image"><meta name="twitter:description" content="This article was originally posted as &quot;SDL2: Loading Images with SDL_image&quot; on 25th November 2013 at Programmer&#39;s Ranch, and has been updated before being reposted here. The source code for this article is available at the Gigi Labs BitBucket repository. In &quot;SDL2: Displaying an Image in the Window&quot;, we saw how we could load bitmaps…"><meta name="twitter:image" content="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker.png">
+			<style type="text/css" id="wp-custom-css">
+				/*
+Welcome to Custom CSS!
+
+CSS (Cascading Style Sheets) is a kind of code that tells the browser how
+to render a web page. You may delete these comments and get started with
+your customizations.
+
+By default, your stylesheet will be loaded after the theme stylesheets,
+which means that your rules can take precedence and override the theme CSS
+rules. Just write here what you want to change, you don't need to copy all
+your theme's stylesheet content.
+*/
+.site-content .entry-header,
+.site-content .entry-content,
+.site-content .entry-summary,
+
+.site-content .entry-meta, .page-content {
+/* Original max-width: 474px */
+	max-width: 80%;
+}
+
+.full-width .site-content .wp-caption.alignleft {
+	margin-left: 0;
+}			</style>
+		<style type="text/css"></style><link rel="stylesheet" type="text/css" id="gravatar-card-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/hovercard.css"><link rel="stylesheet" type="text/css" id="gravatar-card-services-css" href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/services.css"><script type="text/javascript" charset="utf-8" async="" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/button.b731e6c82269f70f6fc53634e044a4c6.js.下載"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style></head>
+
+<body class="post-template-default single single-post postid-929 single-format-standard masthead-fixed full-width singular">
+<div id="page" class="hfeed site">
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="header-main">
+			<h1 class="site-title"><a href="http://gigi.nullneuron.net/gigilabs/" rel="home">Gigi Labs</a></h1>
+
+			<div class="search-toggle">
+				<a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#search-container" class="screen-reader-text" aria-expanded="false" aria-controls="search-container">Search</a>
+			</div>
+
+			<nav id="primary-navigation" class="site-navigation primary-navigation" role="navigation">
+				<button class="menu-toggle">Primary Menu</button>
+				<a class="screen-reader-text skip-link" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#content">Skip to content</a>
+				<div id="primary-menu" class="nav-menu"><ul>
+<li class="page_item page-item-193"><a href="http://gigi.nullneuron.net/gigilabs/contact/">Contact</a></li>
+<li class="page_item page-item-873 page_item_has_children"><a href="http://gigi.nullneuron.net/gigilabs/links/">Links</a>
+<ul class="children">
+	<li class="page_item page-item-642"><a href="http://gigi.nullneuron.net/gigilabs/links/management/">Management</a></li>
+</ul>
+</li>
+<li class="page_item page-item-512"><a href="http://gigi.nullneuron.net/gigilabs/malta-bank-interest-rates/">Malta Bank Interest Rates</a></li>
+<li class="page_item page-item-209 page_item_has_children"><a href="http://gigi.nullneuron.net/gigilabs/projects/">Projects</a>
+<ul class="children">
+	<li class="page_item page-item-572"><a href="http://gigi.nullneuron.net/gigilabs/projects/net-settings-framework/">.NET Settings Framework</a></li>
+	<li class="page_item page-item-1197"><a href="http://gigi.nullneuron.net/gigilabs/projects/cache-service/">Cache Service</a></li>
+	<li class="page_item page-item-588"><a href="http://gigi.nullneuron.net/gigilabs/projects/finance-library/">Finance Library</a></li>
+	<li class="page_item page-item-211"><a href="http://gigi.nullneuron.net/gigilabs/projects/imaptalk/">ImapTalk</a></li>
+	<li class="page_item page-item-221"><a href="http://gigi.nullneuron.net/gigilabs/projects/lilly-notes/">Lilly Notes</a></li>
+</ul>
+</li>
+<li class="page_item page-item-383"><a href="http://gigi.nullneuron.net/gigilabs/public-talks/">Public Talks</a></li>
+<li class="page_item page-item-235"><a href="http://gigi.nullneuron.net/gigilabs/websites/">Websites</a></li>
+<li class="page_item page-item-495 page_item_has_children"><a href="http://gigi.nullneuron.net/gigilabs/writing/">Writing</a>
+<ul class="children">
+	<li class="page_item page-item-1912"><a href="http://gigi.nullneuron.net/gigilabs/writing/sdl2-tutorials/">SDL2 Tutorials</a></li>
+	<li class="page_item page-item-2212"><a href="http://gigi.nullneuron.net/gigilabs/writing/c-6-features/">C# 6 Features</a></li>
+	<li class="page_item page-item-2207"><a href="http://gigi.nullneuron.net/gigilabs/writing/sorry-state-of-the-web/">Sorry State of the Web</a></li>
+</ul>
+</li>
+</ul></div>
+			</nav>
+		</div>
+
+		<div id="search-container" class="search-box-wrapper hide">
+			<div class="search-box">
+				<form role="search" method="get" class="search-form" action="http://gigi.nullneuron.net/gigilabs/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search …" value="" name="s">
+				</label>
+				<input type="submit" class="search-submit" value="Search">
+			</form>			</div>
+		</div>
+	</header><!-- #masthead -->
+
+	<div id="main" class="site-main">
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+			
+<article id="post-929" class="post-929 post type-post status-publish format-standard hentry category-software-development tag-game-development tag-programmers-ranch tag-sdl_image tag-sdl2">
+	
+	<header class="entry-header">
+				<div class="entry-meta">
+			<span class="cat-links"><a href="http://gigi.nullneuron.net/gigilabs/category/software-development/" rel="category tag">Software development</a></span>
+		</div>
+		<h1 class="entry-title">Loading Images in SDL2 with SDL_image</h1>
+		<div class="entry-meta">
+			<span class="entry-date"><a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/" rel="bookmark"><time class="entry-date" datetime="2015-11-06T17:16:06+00:00">November 6, 2015</time></a></span> <span class="byline"><span class="author vcard"><a class="url fn n" href="http://gigi.nullneuron.net/gigilabs/author/gigi/" rel="author">Gigi</a></span></span>			<span class="comments-link"><a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#comments">6 Comments</a></span>
+					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p><em>This article was originally posted as “<a href="http://programmersranch.blogspot.com/2013/11/sdl2-loading-images-with-sdlimage.html">SDL2: Loading Images with SDL_image</a>” on 25th November 2013 at Programmer’s Ranch, and has been updated before being reposted here. The <a href="https://bitbucket.org/dandago/gigilabs/src/697f589409680409d4a1ddb6cb6a1c87766cd362/Sdl2ImageLoad/?at=master">source code</a> for this article is available at the <a href="https://bitbucket.org/dandago/gigilabs/src/e2d13fc36648?at=master">Gigi Labs BitBucket repository</a>.</em></p>
+<p>In “<a href="http://gigi.nullneuron.net/gigilabs/displaying-an-image-in-an-sdl2-window/">SDL2: Displaying an Image in the Window</a>“, we saw how we could load bitmaps using the&nbsp;<a href="http://wiki.libsdl.org/SDL_LoadBMP">SDL_LoadBMP()</a>&nbsp;function. Unfortunately, working with bitmaps is very limiting, and the core SDL2 library does not provide the means to work with other image formats. However, such functionality is provided by an extension library called&nbsp;<a href="http://www.libsdl.org/projects/SDL_image/">SDL_image</a>. In this article, we will learn how to set up SDL_image and also how to use it to load other image formats.</p>
+<p>Setting up SDL_image is not very different from&nbsp;<a href="http://gigi.nullneuron.net/gigilabs/setting-up-sdl2-with-visual-studio-2015/">setting up SDL 2.0</a>&nbsp;itself. You need to go to the&nbsp;<a href="http://www.libsdl.org/projects/SDL_image/">SDL_image</a>&nbsp;homepage and download the development libraries:</p>
+<p><a href="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2.png"><img data-attachment-id="934" data-permalink="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/sdl_image-downloads2/" data-orig-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2.png" data-orig-size="1280,1024" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="sdl_image-downloads2" data-image-description="" data-medium-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2-300x240.png" data-large-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2-1024x819.png" class="aligncenter size-large wp-image-934" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-downloads2-1024x819.png" alt="sdl_image-downloads2" width="474" height="379" srcset="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2-1024x819.png 1024w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2-300x240.png 300w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-downloads2.png 1280w" sizes="(max-width: 474px) 100vw, 474px"></a></p>
+<p>Extract the&nbsp;<strong>include</strong> and&nbsp;<strong>lib</strong> folders inside the zip file over the ones you have in your&nbsp;<strong>sdl2</strong> folder. You should get an <strong>SDL_image.h</strong> file in your&nbsp;<strong>include</strong> folder, and in your&nbsp;<strong>lib\x86</strong> and&nbsp;<strong>lib\x64</strong> folders you should get <strong>SDL2_image.lib</strong> and a whole bunch of DLLs including <strong>SDL2_image.dll</strong>.</p>
+<p>We’ll start off with the same code we had in “<a href="http://gigi.nullneuron.net/gigilabs/displaying-an-image-in-an-sdl2-window/">Displaying an Image in an SDL2 Window</a>” (you can just grab the <a href="https://bitbucket.org/dandago/gigilabs/src/e2d13fc3664860b0d90759a036f41ed18db81223/Sdl2DisplayImage/?at=master">source code</a> if you’re lazy). I’ve modified the code so that the image fills the window:</p>
+<div><div id="highlighter_537180" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div><div class="line number23 index22 alt2">23</div><div class="line number24 index23 alt1">24</div><div class="line number25 index24 alt2">25</div><div class="line number26 index25 alt1">26</div><div class="line number27 index26 alt2">27</div><div class="line number28 index27 alt1 highlighted">28</div><div class="line number29 index28 alt2 highlighted">29</div><div class="line number30 index29 alt1 highlighted">30</div><div class="line number31 index30 alt2">31</div><div class="line number32 index31 alt1">32</div><div class="line number33 index32 alt2">33</div><div class="line number34 index33 alt1">34</div><div class="line number35 index34 alt2">35</div><div class="line number36 index35 alt1">36</div><div class="line number37 index36 alt2">37</div><div class="line number38 index37 alt1">38</div><div class="line number39 index38 alt2">39</div><div class="line number40 index39 alt1">40</div><div class="line number41 index40 alt2">41</div><div class="line number42 index41 alt1">42</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include &lt;SDL.h&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="cpp color1 bold">int</code> <code class="cpp plain">main(</code><code class="cpp color1 bold">int</code> <code class="cpp plain">argc, </code><code class="cpp color1 bold">char</code> <code class="cpp plain">** argv)</code></div><div class="line number4 index3 alt1"><code class="cpp plain">{</code></div><div class="line number5 index4 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp color1 bold">bool</code> <code class="cpp plain">quit = </code><code class="cpp keyword bold">false</code><code class="cpp plain">;</code></div><div class="line number6 index5 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Event event;</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Init(SDL_INIT_VIDEO);</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Window * window = SDL_CreateWindow(</code><code class="cpp string">"SDL2 Displaying Image"</code><code class="cpp plain">,</code></div><div class="line number11 index10 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);</code></div><div class="line number12 index11 alt1">&nbsp;</div><div class="line number13 index12 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);</code></div><div class="line number14 index13 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Surface * image = SDL_LoadBMP(</code><code class="cpp string">"image.bmp"</code><code class="cpp plain">);</code></div><div class="line number15 index14 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, image);</code></div><div class="line number16 index15 alt1">&nbsp;</div><div class="line number17 index16 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">while</code> <code class="cpp plain">(!quit)</code></div><div class="line number18 index17 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number19 index18 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_WaitEvent(&amp;event);</code></div><div class="line number20 index19 alt1">&nbsp;</div><div class="line number21 index20 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">switch</code> <code class="cpp plain">(event.type)</code></div><div class="line number22 index21 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">{</code></div><div class="line number23 index22 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">case</code> <code class="cpp plain">SDL_QUIT:</code></div><div class="line number24 index23 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">quit = </code><code class="cpp keyword bold">true</code><code class="cpp plain">;</code></div><div class="line number25 index24 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">break</code><code class="cpp plain">;</code></div><div class="line number26 index25 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number27 index26 alt2">&nbsp;</div><div class="line number28 index27 alt1 highlighted"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//SDL_Rect dstrect = { 5, 5, 320, 240 };</code></div><div class="line number29 index28 alt2 highlighted"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp comments">//SDL_RenderCopy(renderer, texture, NULL, &amp;dstrect);</code></div><div class="line number30 index29 alt1 highlighted"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_RenderCopy(renderer, texture, NULL, NULL);</code></div><div class="line number31 index30 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_RenderPresent(renderer);</code></div><div class="line number32 index31 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">}</code></div><div class="line number33 index32 alt2">&nbsp;</div><div class="line number34 index33 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_DestroyTexture(texture);</code></div><div class="line number35 index34 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_FreeSurface(image);</code></div><div class="line number36 index35 alt1"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_DestroyRenderer(renderer);</code></div><div class="line number37 index36 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_DestroyWindow(window);</code></div><div class="line number38 index37 alt1">&nbsp;</div><div class="line number39 index38 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp plain">SDL_Quit();</code></div><div class="line number40 index39 alt1">&nbsp;</div><div class="line number41 index40 alt2"><code class="cpp spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="cpp keyword bold">return</code> <code class="cpp plain">0;</code></div><div class="line number42 index41 alt1"><code class="cpp plain">}</code></div></div></td></tr></tbody></table></div></div>
+<p>Now since we’ve introduced a new statically-linked library (i.e. <strong>SDL2_image.lib</strong>), the first thing we need to do is add it to the <strong>Linker -&gt; Input</strong> in the project properties:</p>
+<p><a href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-linker.png"><img data-attachment-id="938" data-permalink="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/sdl_image-linker/" data-orig-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker.png" data-orig-size="883,565" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="sdl_image-linker" data-image-description="" data-medium-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker-300x192.png" data-large-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker.png" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-linker.png" alt="sdl_image-linker" width="883" height="565" class="aligncenter size-full wp-image-938" srcset="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker.png 883w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-linker-300x192.png 300w" sizes="(max-width: 883px) 100vw, 883px"></a></p>
+<p>The entry there should now look like this:</p>
+<div><div id="highlighter_330324" class="syntaxhighlighter  plain"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="plain plain">SDL2.lib;SDL2main.lib;SDL2_image.lib</code></div></div></td></tr></tbody></table></div></div>
+<p>Now, we’re going to load this nice photo (.jpg format) taken in Gardaland in 2006:</p>
+<p><a href="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159.jpg"><img data-attachment-id="936" data-permalink="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/sdl_image-pict3159/" data-orig-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159.jpg" data-orig-size="1280,960" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="sdl_image-pict3159" data-image-description="" data-medium-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159-300x225.jpg" data-large-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159-1024x768.jpg" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-pict3159-1024x768.jpg" alt="sdl_image-pict3159" width="474" height="356" class="aligncenter size-large wp-image-936" srcset="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159-1024x768.jpg 1024w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159-300x225.jpg 300w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-pict3159.jpg 1280w" sizes="(max-width: 474px) 100vw, 474px"></a></p>
+<p>Doing this is quite simple. First, we need to include the appropriate header:</p>
+<div><div id="highlighter_58444" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp preprocessor">#include &lt;SDL_image.h&gt;</code></div></div></td></tr></tbody></table></div></div>
+<p>Then, we initialise SDL_image by calling&nbsp;<a href="http://www.libsdl.org/projects/SDL_image/docs/SDL_image_8.html">IMG_Init()</a>&nbsp;right after the call to <code>SDL_Init()</code>:</p>
+<div><div id="highlighter_549993" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">IMG_Init(IMG_INIT_JPG);</code></div></div></td></tr></tbody></table></div></div>
+<p>…and before the call to SDL_Quit(), we shut down SDL_Image using&nbsp;<a href="http://www.libsdl.org/projects/SDL_image/docs/SDL_image_9.html#SEC9">IMG_Quit()</a>:</p>
+<div><div id="highlighter_331049" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">IMG_Quit();</code></div></div></td></tr></tbody></table></div></div>
+<p>All we have left to do now is replace the line calling <code>SDL_LoadBMP()</code> with one that uses <a href="http://www.libsdl.org/projects/SDL_image/docs/SDL_image_11.html#SEC11">IMG_Load()</a> instead:</p>
+<div><div id="highlighter_149606" class="syntaxhighlighter  cpp"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="cpp plain">SDL_Surface * image = IMG_Load(</code><code class="cpp string">"PICT3159.JPG"</code><code class="cpp plain">);</code></div></div></td></tr></tbody></table></div></div>
+<p>You should now be able to build this program (Ctrl+Shift+B). Before you run it, though, make sure that <strong>SDL2.dll</strong> is in the same folder as your executable. You’ll also need to toss in all the DLLs from the appropriate <strong>lib</strong> folder (most likely the x86 one is what you’ll be using by default) – that includes <strong>SDL2_image.dll</strong> along with format-specific files such as <strong>libjpeg-9.dll</strong>, <strong>libpng16-16.dll</strong>, etc. And your image file will need to be there too.</p>
+<p>And voilà:</p>
+<p><a href="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-result.png"><img data-attachment-id="937" data-permalink="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/sdl_image-result/" data-orig-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result.png" data-orig-size="656,518" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="sdl_image-result" data-image-description="" data-medium-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result-300x237.png" data-large-file="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result.png" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/sdl_image-result.png" alt="sdl_image-result" width="656" height="518" class="aligncenter size-full wp-image-937" srcset="http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result.png 656w, http://gigi.nullneuron.net/gigilabs/wp-content/uploads/2015/11/sdl_image-result-300x237.png 300w" sizes="(max-width: 656px) 100vw, 656px"></a></p>
+<p>Isn’t that sweet? The SDL_image library allows you to load a large variety of image formats, by just replacing <code>SDL_LoadBMP()</code> with <code>IMG_Load()</code>. You’ll need to initialise and cleanup the library (although it seems to work even without this) and remember to link the library and include the appropriate header file. But as you can see, it’s pretty straightforward.</p>
+	</div><!-- .entry-content -->
+	
+	<footer class="entry-meta"><span class="tag-links"><a href="http://gigi.nullneuron.net/gigilabs/tag/game-development/" rel="tag">Game Development</a><a href="http://gigi.nullneuron.net/gigilabs/tag/programmers-ranch/" rel="tag">Programmer's Ranch</a><a href="http://gigi.nullneuron.net/gigilabs/tag/sdl_image/" rel="tag">SDL_image</a><a href="http://gigi.nullneuron.net/gigilabs/tag/sdl2/" rel="tag">SDL2</a></span></footer></article><!-- #post-## -->
+	<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Post navigation</h1>
+		<div class="nav-links">
+			<a href="http://gigi.nullneuron.net/gigilabs/connecting-to-rabbitmq-across-machines-with-net-client/" rel="prev"><span class="meta-nav">Previous Post</span>Connecting to RabbitMQ Across Machines with .NET Client</a><a href="http://gigi.nullneuron.net/gigilabs/resilient-connections-with-rabbitmq-net-client/" rel="next"><span class="meta-nav">Next Post</span>Resilient Connections with RabbitMQ .NET Client</a>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+<div id="comments" class="comments-area">
+
+	
+	<h2 class="comments-title">
+		6 thoughts on “Loading Images in SDL2 with SDL_image”	</h2>
+
+	
+	<ol class="comment-list">
+				<li id="comment-7459" class="pingback even thread-even depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://gigi.nullneuron.net/gigilabs/displaying-text-in-sdl2-with-sdl_ttf/" rel="external nofollow" class="url">Displaying Text in SDL2 with SDL_ttf | Gigi Labs</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-7479" class="pingback odd alt thread-odd thread-alt depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://gigi.nullneuron.net/gigilabs/animations-with-sprite-sheets-in-sdl2/" rel="external nofollow" class="url">Animations with Sprite Sheets in SDL2 | Gigi Labs</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-9677" class="pingback even thread-even depth-1">
+			<div class="comment-body">
+				Pingback: <a href="http://gigi.nullneuron.net/gigilabs/converting-an-image-to-grayscale-using-sdl2/" rel="external nofollow" class="url">Converting an Image to Grayscale using SDL2 | Gigi Labs</a> 			</div>
+</li><!-- #comment-## -->
+		<li id="comment-9788" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-9788" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/1b34af65052e5b96bef96dbfd4129d01" srcset="http://1.gravatar.com/avatar/1b34af65052e5b96bef96dbfd4129d01?s=68&amp;d=mm&amp;r=g 2x" class="avatar avatar-34 photo grav-hashed grav-hijack" height="34" width="34" id="grav-1b34af65052e5b96bef96dbfd4129d01-0">						<b class="fn">Logan Dihel</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#comment-9788">
+							<time datetime="2016-01-26T00:50:12+00:00">
+								January 26, 2016 at 12:50 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am trying to load images in c++ using SDL2 and SDL_image in Xcode. I copy and pasted your example code, but to no avail: the window was severely tearing and flashing parts of my code and desktop instead of my simple image I was trying to load. This happened using .jpg, .png, and .bmp files. I’m confused why this won’t work for me. And yes I did initialize IMG_Init(…) with the respected file type. Any suggestions?</p>
+<p>After debugging, I found that the *image == nullptr, which is strange because my file name is correct. The file name is Test.png, and I tried using “\\Test.png”, “/Test.png”, “[the absolute location on my computer]/Test.png”, and “[the project file]/Test.png”. This is a very frustrating issue</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/?replytocom=9788#respond" onclick="return addComment.moveForm( &quot;div-comment-9788&quot;, &quot;9788&quot;, &quot;respond&quot;, &quot;929&quot; )" aria-label="Reply to Logan Dihel">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+		<li id="comment-9789" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-9789" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/1b34af65052e5b96bef96dbfd4129d01" srcset="http://1.gravatar.com/avatar/1b34af65052e5b96bef96dbfd4129d01?s=68&amp;d=mm&amp;r=g 2x" class="avatar avatar-34 photo grav-hashed grav-hijack" height="34" width="34" id="grav-1b34af65052e5b96bef96dbfd4129d01-1">						<b class="fn">Logan Dihel</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#comment-9789">
+							<time datetime="2016-01-26T00:53:08+00:00">
+								January 26, 2016 at 12:53 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am trying to load images in c++ using SDL2 and SDL_image in Xcode. I copy and pasted your example code, but to no avail: the window was severely tearing and flashing parts of my code and desktop instead of my simple image I was trying to load. This happened using .jpg, .png, and .bmp files. I’m confused why this won’t work for me. And yes I did initialize IMG_Init(…) with the respected file type. Any suggestions?</p>
+<p>While debugging, I noticed that image == nullptr, which may be a reason for the image not loading. I also tried lots of variations of the pathName, including “Test.png”, “\\Test.png”, “/Test.png”, [absolutePath]/Test.png, and [project file path]/Test.png</p>
+<p>When I called SDL_RenderClear(renderer) the tearing went away, but I was left with just a black screen.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/?replytocom=9789#respond" onclick="return addComment.moveForm( &quot;div-comment-9789&quot;, &quot;9789&quot;, &quot;respond&quot;, &quot;929&quot; )" aria-label="Reply to Logan Dihel">Reply</a></div>			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-9794" class="comment byuser comment-author-gigi bypostauthor odd alt depth-2">
+			<article id="div-comment-9794" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/f527f77225e702bd699a31ec0a90fc9a" srcset="http://0.gravatar.com/avatar/f527f77225e702bd699a31ec0a90fc9a?s=68&amp;d=mm&amp;r=g 2x" class="avatar avatar-34 photo grav-hashed grav-hijack" height="34" width="34" id="grav-f527f77225e702bd699a31ec0a90fc9a-0">						<b class="fn"><a href="http://gigi.nullneuron.net/gigilabs" rel="external nofollow" class="url">Gigi</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#comment-9794">
+							<time datetime="2016-01-26T08:49:44+00:00">
+								January 26, 2016 at 8:49 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I suggest you use SDL_GetError() right after the function call that gave you a NULL image pointer, combined with SDL_ShowSimpleMessageBox() to show you what the problem is. There’s an example how to do this in an my old <a href="http://programmersranch.blogspot.com.mt/2013/11/sdl2-displaying-image-in-window.html" rel="nofollow">SDL2 Displaying Image article</a>.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/?replytocom=9794#respond" onclick="return addComment.moveForm( &quot;div-comment-9794&quot;, &quot;9794&quot;, &quot;respond&quot;, &quot;929&quot; )" aria-label="Reply to Gigi">Reply</a></div>			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+	</ol><!-- .comment-list -->
+
+	
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#respond" style="display:none;">Cancel reply</a></small></h3>			<form action="http://gigi.nullneuron.net/gigilabs/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="">
+				<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" aria-required="true" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200"></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="929" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="aefaffe1b7"></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p style="display: none;"></p>			<input type="hidden" id="ak_js" name="ak_js" value="1497521079219"></form>
+			</div><!-- #respond -->
+	
+</div><!-- #comments -->
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+<div id="secondary">
+		<h2 class="site-description">"You don't learn to walk by following rules. You learn by doing, and by falling over." — Richard Branson</h2>
+	
+	
+		<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+		<aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="http://gigi.nullneuron.net/gigilabs/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search …" value="" name="s">
+				</label>
+				<input type="submit" class="search-submit" value="Search">
+			</form></aside><aside id="blog_subscription-4" class="widget jetpack_subscription_widget"><h1 class="widget-title">Subscribe to Blog via Email</h1>
+			<form action="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-4">
+				<div id="subscribe-text"><p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+</div><p>Join 15 other subscribers</p>
+					<p id="subscribe-email">
+						<label id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-4" style="clip: rect(1px 1px 1px 1px); position: absolute; height: 1px; width: 1px; overflow: hidden;">
+							Email Address						</label>
+						<input type="email" name="email" required="required" class="required" value="" id="subscribe-field-blog_subscription-4" placeholder="Email Address">
+					</p>
+
+					<p id="subscribe-submit">
+						<input type="hidden" name="action" value="subscribe">
+						<input type="hidden" name="source" value="http://gigi.nullneuron.net/gigilabs/loading-images-in-sdl2-with-sdl_image/">
+						<input type="hidden" name="sub-type" value="widget">
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-4">
+												<input type="submit" value="Subscribe" name="jetpack_subscriptions_widget">
+					</p>
+							</form>
+
+			<script>
+			/*
+			Custom functionality for safari and IE
+			 */
+			(function( d ) {
+				// In case the placeholder functionality is available we remove labels
+				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-4]' );
+						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height   = '1px';
+						label.style.width    = '1px';
+						label.style.overflow = 'hidden';
+				}
+
+				// Make sure the email value is filled in before allowing submit
+				var form = d.getElementById('subscribe-blog-blog_subscription-4'),
+					input = d.getElementById('subscribe-field-blog_subscription-4'),
+					handler = function( event ) {
+						if ( '' === input.value ) {
+							input.focus();
+
+							if ( event.preventDefault ){
+								event.preventDefault();
+							}
+
+							return false;
+						}
+					};
+
+				if ( window.addEventListener ) {
+					form.addEventListener( 'submit', handler, false );
+				} else {
+					form.attachEvent( 'onsubmit', handler );
+				}
+			})( document );
+			</script>
+				
+</aside><aside id="twitter-follow-2" class="widget widget_twitter-follow"><h1 class="widget-title">Follow Gigi Labs on Twitter</h1><div class="twitter-follow"><iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" title="Twitter Follow Button" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/follow_button.7bf2b0e802ada47dae9548b7a1739fed.en.html" style="position: static; visibility: visible; width: 228px; height: 20px;" data-screen-name="dandago2"></iframe></div></aside><aside id="easy_facebook_page_plugin-2" class="widget widget_easy_facebook_page_plugin"><h1 class="widget-title">Gigi Labs on Facebook</h1><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/0F7S7QWJ0Ac.html" style="border: none;"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/0F7S7QWJ0Ac(1).html" style="border: none;"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="f193399b0c45de4" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/ping.html" style="display: none;"></iframe></div></div></div>
+					<script>(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=395202813876688";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script><div class="fb-page  fb_iframe_widget" data-href="https://www.facebook.com/gigilabstech" data-hide-cover="false" data-width="170" data-height="" data-show-facepile="false" data-show-posts="false" data-adapt-container-width="true" data-hide-cta="false" data-small-header="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=395202813876688&amp;container_width=162&amp;hide_cover=false&amp;hide_cta=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fgigilabstech&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=false&amp;show_posts=false&amp;small_header=true&amp;width=170"><span style="vertical-align: bottom; width: 180px; height: 70px;"><iframe name="f35f4711b34d1bc" width="170px" height="1000px" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" title="fb:page Facebook Social Plugin" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/page.html" style="border: none; visibility: visible; width: 180px; height: 70px;" class=""></iframe></span></div></aside><aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Categories</h1>		<ul>
+	<li class="cat-item cat-item-4"><a href="http://gigi.nullneuron.net/gigilabs/category/games/">Games</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://gigi.nullneuron.net/gigilabs/category/life/">Life</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://gigi.nullneuron.net/gigilabs/category/management/">Management</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://gigi.nullneuron.net/gigilabs/category/music/">Music</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://gigi.nullneuron.net/gigilabs/category/rants/">Rants</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://gigi.nullneuron.net/gigilabs/category/site-news/">Site News</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://gigi.nullneuron.net/gigilabs/category/software/">Software</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://gigi.nullneuron.net/gigilabs/category/software-development/">Software development</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h1 class="widget-title">Tags</h1><div class="tagcloud"><a href="http://gigi.nullneuron.net/gigilabs/tag/net-2015/" class="tag-cloud-link tag-link-15 tag-link-position-1" style="font-size: 8pt;" aria-label=".NET 2015 (2 items)">.NET 2015</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/net-core/" class="tag-cloud-link tag-link-114 tag-link-position-2" style="font-size: 12.7727272727pt;" aria-label=".NET Core (5 items)">.NET Core</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/ado-net/" class="tag-cloud-link tag-link-63 tag-link-position-3" style="font-size: 9.90909090909pt;" aria-label="ADO .NET (3 items)">ADO .NET</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/air-malta/" class="tag-cloud-link tag-link-55 tag-link-position-4" style="font-size: 8pt;" aria-label="Air Malta (2 items)">Air Malta</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/akka-net/" class="tag-cloud-link tag-link-104 tag-link-position-5" style="font-size: 18.6590909091pt;" aria-label="Akka .NET (13 items)">Akka .NET</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/akka-remote/" class="tag-cloud-link tag-link-108 tag-link-position-6" style="font-size: 9.90909090909pt;" aria-label="Akka.Remote (3 items)">Akka.Remote</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/appsettings/" class="tag-cloud-link tag-link-42 tag-link-position-7" style="font-size: 12.7727272727pt;" aria-label="AppSettings (5 items)">AppSettings</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/asp-net-5/" class="tag-cloud-link tag-link-71 tag-link-position-8" style="font-size: 12.7727272727pt;" aria-label="ASP .NET 5 (5 items)">ASP .NET 5</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/asp-net-web-api/" class="tag-cloud-link tag-link-34 tag-link-position-9" style="font-size: 12.7727272727pt;" aria-label="ASP .NET Web API (5 items)">ASP .NET Web API</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/async/" class="tag-cloud-link tag-link-43 tag-link-position-10" style="font-size: 11.5pt;" aria-label="async (4 items)">async</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/bass-guitar/" class="tag-cloud-link tag-link-13 tag-link-position-11" style="font-size: 8pt;" aria-label="Bass Guitar (2 items)">Bass Guitar</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/c/" class="tag-cloud-link tag-link-7 tag-link-position-12" style="font-size: 21.3636363636pt;" aria-label="C# (20 items)">C#</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/c-6/" class="tag-cloud-link tag-link-8 tag-link-position-13" style="font-size: 18.0227272727pt;" aria-label="C# 6 (12 items)">C# 6</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/dependency-injection/" class="tag-cloud-link tag-link-26 tag-link-position-14" style="font-size: 12.7727272727pt;" aria-label="Dependency Injection (5 items)">Dependency Injection</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/game-development/" class="tag-cloud-link tag-link-44 tag-link-position-15" style="font-size: 19.4545454545pt;" aria-label="Game Development (15 items)">Game Development</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/guitar/" class="tag-cloud-link tag-link-12 tag-link-position-16" style="font-size: 9.90909090909pt;" aria-label="Guitar (3 items)">Guitar</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/gulp/" class="tag-cloud-link tag-link-82 tag-link-position-17" style="font-size: 8pt;" aria-label="Gulp (2 items)">Gulp</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/image-processing/" class="tag-cloud-link tag-link-77 tag-link-position-18" style="font-size: 8pt;" aria-label="Image Processing (2 items)">Image Processing</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/imaptalk/" class="tag-cloud-link tag-link-30 tag-link-position-19" style="font-size: 12.7727272727pt;" aria-label="IMAPTalk (5 items)">IMAPTalk</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/linux/" class="tag-cloud-link tag-link-51 tag-link-position-20" style="font-size: 9.90909090909pt;" aria-label="Linux (3 items)">Linux</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/microsoft-orleans/" class="tag-cloud-link tag-link-111 tag-link-position-21" style="font-size: 14.6818181818pt;" aria-label="Microsoft Orleans (7 items)">Microsoft Orleans</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/ninject/" class="tag-cloud-link tag-link-25 tag-link-position-22" style="font-size: 8pt;" aria-label="Ninject (2 items)">Ninject</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/npm/" class="tag-cloud-link tag-link-83 tag-link-position-23" style="font-size: 8pt;" aria-label="npm (2 items)">npm</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/nuget/" class="tag-cloud-link tag-link-37 tag-link-position-24" style="font-size: 8pt;" aria-label="NuGet (2 items)">NuGet</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/programmers-ranch/" class="tag-cloud-link tag-link-73 tag-link-position-25" style="font-size: 22pt;" aria-label="Programmer&#39;s Ranch (22 items)">Programmer's Ranch</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/rabbitmq/" class="tag-cloud-link tag-link-56 tag-link-position-26" style="font-size: 13.8863636364pt;" aria-label="RabbitMQ (6 items)">RabbitMQ</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/redis/" class="tag-cloud-link tag-link-41 tag-link-position-27" style="font-size: 15.4772727273pt;" aria-label="Redis (8 items)">Redis</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/review/" class="tag-cloud-link tag-link-20 tag-link-position-28" style="font-size: 8pt;" aria-label="Review (2 items)">Review</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/sdl2/" class="tag-cloud-link tag-link-50 tag-link-position-29" style="font-size: 19.4545454545pt;" aria-label="SDL2 (15 items)">SDL2</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/search/" class="tag-cloud-link tag-link-48 tag-link-position-30" style="font-size: 8pt;" aria-label="Search (2 items)">Search</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/security/" class="tag-cloud-link tag-link-60 tag-link-position-31" style="font-size: 16.9090909091pt;" aria-label="Security (10 items)">Security</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/sensible-world-of-soccer/" class="tag-cloud-link tag-link-81 tag-link-position-32" style="font-size: 8pt;" aria-label="Sensible World of Soccer (2 items)">Sensible World of Soccer</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/signalr/" class="tag-cloud-link tag-link-57 tag-link-position-33" style="font-size: 8pt;" aria-label="SignalR (2 items)">SignalR</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/sorrystateoftheweb/" class="tag-cloud-link tag-link-118 tag-link-position-34" style="font-size: 16.2727272727pt;" aria-label="SorryStateOfTheWeb (9 items)">SorryStateOfTheWeb</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/stackexchange-redis/" class="tag-cloud-link tag-link-45 tag-link-position-35" style="font-size: 9.90909090909pt;" aria-label="StackExchange.Redis (3 items)">StackExchange.Redis</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/unit-testing/" class="tag-cloud-link tag-link-95 tag-link-position-36" style="font-size: 9.90909090909pt;" aria-label="Unit Testing (3 items)">Unit Testing</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/unity3d/" class="tag-cloud-link tag-link-79 tag-link-position-37" style="font-size: 8pt;" aria-label="Unity3D (2 items)">Unity3D</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/user-experience/" class="tag-cloud-link tag-link-90 tag-link-position-38" style="font-size: 11.5pt;" aria-label="User Experience (4 items)">User Experience</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/visual-studio/" class="tag-cloud-link tag-link-78 tag-link-position-39" style="font-size: 12.7727272727pt;" aria-label="Visual Studio (5 items)">Visual Studio</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/visual-studio-2015/" class="tag-cloud-link tag-link-14 tag-link-position-40" style="font-size: 18.6590909091pt;" aria-label="Visual Studio 2015 (13 items)">Visual Studio 2015</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/windows/" class="tag-cloud-link tag-link-18 tag-link-position-41" style="font-size: 8pt;" aria-label="Windows (2 items)">Windows</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/windows-10/" class="tag-cloud-link tag-link-19 tag-link-position-42" style="font-size: 12.7727272727pt;" aria-label="Windows 10 (5 items)">Windows 10</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/work/" class="tag-cloud-link tag-link-22 tag-link-position-43" style="font-size: 9.90909090909pt;" aria-label="Work (3 items)">Work</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/wpf/" class="tag-cloud-link tag-link-67 tag-link-position-44" style="font-size: 9.90909090909pt;" aria-label="WPF (3 items)">WPF</a>
+<a href="http://gigi.nullneuron.net/gigilabs/tag/xml/" class="tag-cloud-link tag-link-65 tag-link-position-45" style="font-size: 8pt;" aria-label="XML (2 items)">XML</a></div>
+</aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h1 class="widget-title">Recent Posts</h1>		<ul>
+					<li>
+				<a href="http://gigi.nullneuron.net/gigilabs/the-pitiful-state-of-the-web-in-may-2017-part-2/">The Pitiful State of the Web in May 2017 (Part 2)</a>
+						</li>
+					<li>
+				<a href="http://gigi.nullneuron.net/gigilabs/how-to-update-all-orleans-packages/">How to Update All Orleans Packages</a>
+						</li>
+					<li>
+				<a href="http://gigi.nullneuron.net/gigilabs/orleans-grain-persistence-with-the-ado-net-storage-provider/">Orleans Grain Persistence with the ADO .NET Storage Provider</a>
+						</li>
+					<li>
+				<a href="http://gigi.nullneuron.net/gigilabs/introduction-to-grain-persistence-with-microsoft-orleans/">Introduction to Grain Persistence with Microsoft Orleans</a>
+						</li>
+					<li>
+				<a href="http://gigi.nullneuron.net/gigilabs/the-pitiful-state-of-the-web-in-may-2017-part-1/">The Pitiful State of the Web in May 2017 (Part 1)</a>
+						</li>
+				</ul>
+		</aside>		<aside id="recent-comments-2" class="widget widget_recent_comments"><h1 class="widget-title">Recent Comments</h1><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link"><a href="http://gigi.nullneuron.net/gigilabs/the-pitiful-state-of-the-web-in-may-2017-part-1/" rel="external nofollow" class="url">The Pitiful State of the Web in May 2017 (Part 1) | Gigi Labs</a></span> on <a href="http://gigi.nullneuron.net/gigilabs/the-broken-web-of-march-2017/#comment-24345">The Broken Web of March 2017</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://gigi.nullneuron.net/gigilabs/the-pitiful-state-of-the-web-in-may-2017-part-2/" rel="external nofollow" class="url">The Pitiful State of the Web in May 2017 (Part 2) | Gigi Labs</a></span> on <a href="http://gigi.nullneuron.net/gigilabs/the-pitiful-state-of-the-web-in-may-2017-part-1/#comment-24344">The Pitiful State of the Web in May 2017 (Part 1)</a></li><li class="recentcomments"><span class="comment-author-link"><a href="http://gigi.nullneuron.net/gigilabs/orleans-grain-persistence-with-the-ado-net-storage-provider/" rel="external nofollow" class="url">Orleans Grain Persistence with the ADO .NET Storage Provider | Gigi Labs</a></span> on <a href="http://gigi.nullneuron.net/gigilabs/introduction-to-grain-persistence-with-microsoft-orleans/#comment-24270">Introduction to Grain Persistence with Microsoft Orleans</a></li><li class="recentcomments"><span class="comment-author-link">Sam</span> on <a href="http://gigi.nullneuron.net/gigilabs/bluehost-ripping-off-customers/#comment-24259">Bluehost Ripping Off Customers</a></li><li class="recentcomments"><span class="comment-author-link">Luke</span> on <a href="http://gigi.nullneuron.net/gigilabs/an-overview-of-air-maltas-customer-service/#comment-24165">An Overview of Air Malta’s Customer Service</a></li></ul></aside><aside id="calendar-2" class="widget widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar">
+	<caption>June 2017</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="3" id="prev"><a href="http://gigi.nullneuron.net/gigilabs/2017/05/">« May</a></td>
+		<td class="pad">&nbsp;</td>
+		<td colspan="3" id="next" class="pad">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td colspan="3" class="pad">&nbsp;</td><td>1</td><td><a href="http://gigi.nullneuron.net/gigilabs/2017/06/02/" aria-label="Posts published on June 2, 2017">2</a></td><td>3</td><td><a href="http://gigi.nullneuron.net/gigilabs/2017/06/04/" aria-label="Posts published on June 4, 2017">4</a></td>
+	</tr>
+	<tr>
+		<td><a href="http://gigi.nullneuron.net/gigilabs/2017/06/05/" aria-label="Posts published on June 5, 2017">5</a></td><td>6</td><td>7</td><td>8</td><td><a href="http://gigi.nullneuron.net/gigilabs/2017/06/09/" aria-label="Posts published on June 9, 2017">9</a></td><td><a href="http://gigi.nullneuron.net/gigilabs/2017/06/10/" aria-label="Posts published on June 10, 2017">10</a></td><td>11</td>
+	</tr>
+	<tr>
+		<td>12</td><td>13</td><td>14</td><td id="today">15</td><td>16</td><td>17</td><td>18</td>
+	</tr>
+	<tr>
+		<td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+	</tr>
+	<tr>
+		<td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+		<td class="pad" colspan="2">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></aside><aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<ul>
+			<li><a href="http://gigi.nullneuron.net/gigilabs/2017/06/">June 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2017/05/">May 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2017/04/">April 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2017/03/">March 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2017/02/">February 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2017/01/">January 2017</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/12/">December 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/11/">November 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/10/">October 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/09/">September 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/08/">August 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/07/">July 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/05/">May 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/04/">April 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/03/">March 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2016/01/">January 2016</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/12/">December 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/11/">November 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/10/">October 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/09/">September 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/08/">August 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/07/">July 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/06/">June 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/05/">May 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/04/">April 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/03/">March 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/02/">February 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2015/01/">January 2015</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2014/12/">December 2014</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2014/11/">November 2014</a></li>
+	<li><a href="http://gigi.nullneuron.net/gigilabs/2014/10/">October 2014</a></li>
+		</ul>
+		</aside>	</div><!-- #primary-sidebar -->
+	</div><!-- #secondary -->
+
+		</div><!-- #main -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+
+			
+			<div class="site-info">
+								<a href="https://wordpress.org/">Proudly powered by WordPress</a>
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
+
+		<div style="display:none">
+	<div class="grofile-hash-map-1b34af65052e5b96bef96dbfd4129d01">
+	</div>
+	<div class="grofile-hash-map-f527f77225e702bd699a31ec0a90fc9a">
+	</div>
+	</div>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/form.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/shCore.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/shBrushCpp.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/shBrushPlain.js.下載"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "http://gigi.nullneuron.net/gigilabs/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "http://gigi.nullneuron.net/gigilabs/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<!--[if lte IE 8]>
+<link rel='stylesheet' id='jetpack-carousel-ie8fix-css'  href='http://gigi.nullneuron.net/gigilabs/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel-ie8fix.css?ver=20121024' type='text/css' media='all' />
+<![endif]-->
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/devicepx-jetpack.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/gprofiles.js.下載"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/wpgroho.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/comment-reply.min.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/functions.js.下載"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+window.twttr=(function(w){t=w.twttr||{};t._e=[];t.ready=function(f){t._e.push(f);};return t;}(window));
+/* ]]> */
+</script>
+<script type="text/javascript" id="twitter-wjs" async="" defer="" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/widgets.js.下載" charset="utf-8"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/wp-embed.min.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/spin.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jquery.spin.js.下載"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"http:\/\/gigi.nullneuron.net\/gigilabs\/wp-admin\/admin-ajax.php","nonce":"8a6b1e86f0","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"http:\/\/gigi.nullneuron.net\/gigilabs\/wp-login.php?redirect_to=http%3A%2F%2Fgigi.nullneuron.net%2Fgigilabs%2Floading-images-in-sdl2-with-sdl_image%2F","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/jetpack-carousel.js.下載"></script>
+<script type="text/javascript" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/e-201724.js.下載" async="" defer=""></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:5.0',blog:'77674697',post:'929',tz:'2',srv:'gigi.nullneuron.net'} ]);
+	_stq.push([ 'clickTrackerInit', '77674697', '929' ]);
+</script>
+
+<img src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/g.gif" alt=":)" width="6" height="5" id="wpstats"><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./Loading Images in SDL2 with SDL_image _ Gigi Labs_files/saved_resource.html"></iframe></body></html>
