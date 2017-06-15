@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cmath>
 #include <cstdlib>
+#include <string>
 #include <SDL2/SDL.h>
 using namespace std;
 
@@ -192,9 +193,78 @@ bool init()
 	return success;
 }
 
+SDL_Renderer *gRenderer = NULL;
+
+class LTexture{
+public:
+    LTexture(){mTexture=NULL;mWidth=0;mHeight=0;}
+    ~LTexture(){free();}
+    bool loadFromFile(string path){
+        free();
+        SDL_Texture *newTexture = NULL;
+        SDL_Surface *loadedSurface = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
+        if(loadedSurface == NULL)
+        {
+            printf( "Unable to load image %s! SDL_image Error:\n", path.c_str());
+        }
+        else
+        {
+            SDL_SetColorKey(loadedSurface,SDL_TRUE,SDL_MapRGB(loadedSurface->format,0,0xFF,0xFF));
+            newTexture = SDL_CreateTextureFromSurface(gRenderer,loadedSurface);
+            if(newTexture == NULL)
+            {
+                printf( "Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError() );
+            }
+            else
+            {
+                mWidth = loadedSurface->w;
+                mHeight = loadedSurface->h;
+            }
+            SDL_FreeSurface(loadedSurface);
+        }
+        mTexture = newTexture;
+        return mTexture != NULL;
+    }
+    void free(){
+        if( mTexture != NULL )
+        {
+            SDL_DestroyTexture( mTexture );
+            mTexture = NULL;
+            mWidth = 0;
+            mHeight = 0;
+        }
+    }
+    void render(int x,int y){
+        SDL_Rect renderquad = {x, y, mWidth, mHeight};
+        SDL_RenderCopy( gRenderer, mTexture, NULL, &renderquad );
+    }
+    int getWidth(){return mWidth;}
+    int getHeight(){return mHeight;}
+private:
+    SDL_Texture * mTexture;
+    int mWidth;
+    int mHeight;
+};
+
+LTexture gFooTexture;
+LTexture gBackgroundTexture;
+
 bool loadMedia()
 {
 	bool success = true;
+
+    /*if( !gFooTexture.loadFromFile( "10_color_keying/foo.png" ) )
+	{
+		printf( "Failed to load Foo' texture image!\n" );
+		success = false;
+	}
+
+	//Load background texture
+	if( !gBackgroundTexture.loadFromFile( "10_color_keying/background.png" ) )
+	{
+		printf( "Failed to load background texture image!\n" );
+		success = false;
+	}*/
 
 	gXOut = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
 	bpawn = SDL_LoadBMP( "04_key_presses/down.bmp" );
@@ -228,7 +298,7 @@ void close()
 int main(int argc,char **argv)
 {
     Bitboard bitboard;
-    int pos_x=0,pos_y=0,i=0,color=1;
+    int pos_x=0,pos_y=0,color=1;
     cout<<"First,or second?"<<endl;
     cin>>color;
     if(color!=0||color!=1)
@@ -273,8 +343,18 @@ int main(int argc,char **argv)
                         }
                     }
                     SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
+                    SDL_BlitSurface( bpawn, NULL, gScreenSurface, NULL );
+                    //SDL_BlitSurface( wpawn, NULL, gScreenSurface, NULL );
+                    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+                    SDL_RenderClear( gRenderer );
+
+                    gBackgroundTexture.render( 0, 0 );
+
+                    gFooTexture.render( 240, 190 );
+
+                    SDL_RenderPresent( gRenderer );
                     SDL_UpdateWindowSurface( gWindow );
-                    SDL_Delay( 2000 );
+                    SDL_Delay( 20000 );
                 }
             }
         }
