@@ -167,39 +167,54 @@ SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* bpawn = NULL,* wpawn = NULL;
+SDL_Renderer *gRenderer = NULL;
 
 bool init()
 {
-	bool success = true;
+    bool success = true;
 
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-	{
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-		success = false;
-	}
-	else
-	{
-		gWindow = SDL_CreateWindow( "Breakthrough", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( gWindow == NULL )
-		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-			success = false;
-		}
-		else
-		{
-			gScreenSurface = SDL_GetWindowSurface( gWindow );
-		}
-	}
-	return success;
+    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    {
+        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        success = false;
+    }
+    else
+    {
+        if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
+        {
+            printf( "Warning: Linear texture filtering not enabled!" );
+        }
+        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+        gWindow = SDL_CreateWindow( "Breakthrough", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+        if( gWindow == NULL )
+        {
+            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+            success = false;
+        }
+        else
+        {
+            gScreenSurface = SDL_GetWindowSurface( gWindow );
+            SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        }
+    }
+    return success;
 }
 
-SDL_Renderer *gRenderer = NULL;
-
-class LTexture{
+class LTexture
+{
 public:
-    LTexture(){mTexture=NULL;mWidth=0;mHeight=0;}
-    ~LTexture(){free();}
-    bool loadFromFile(string path){
+    LTexture()
+    {
+        mTexture=NULL;
+        mWidth=0;
+        mHeight=0;
+    }
+    ~LTexture()
+    {
+        free();
+    }
+    bool loadFromFile(string path)
+    {
         free();
         SDL_Texture *newTexture = NULL;
         SDL_Surface *loadedSurface = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
@@ -225,7 +240,8 @@ public:
         mTexture = newTexture;
         return mTexture != NULL;
     }
-    void free(){
+    void free()
+    {
         if( mTexture != NULL )
         {
             SDL_DestroyTexture( mTexture );
@@ -234,12 +250,19 @@ public:
             mHeight = 0;
         }
     }
-    void render(int x,int y){
+    void render(int x,int y)
+    {
         SDL_Rect renderquad = {x, y, mWidth, mHeight};
         SDL_RenderCopy( gRenderer, mTexture, NULL, &renderquad );
     }
-    int getWidth(){return mWidth;}
-    int getHeight(){return mHeight;}
+    int getWidth()
+    {
+        return mWidth;
+    }
+    int getHeight()
+    {
+        return mHeight;
+    }
 private:
     SDL_Texture * mTexture;
     int mWidth;
@@ -251,122 +274,160 @@ LTexture gBackgroundTexture;
 
 bool loadMedia()
 {
-	bool success = true;
+    bool success = true;
 
-    /*if( !gFooTexture.loadFromFile( "10_color_keying/foo.png" ) )
-	{
-		printf( "Failed to load Foo' texture image!\n" );
-		success = false;
-	}
-
-	//Load background texture
-	if( !gBackgroundTexture.loadFromFile( "10_color_keying/background.png" ) )
-	{
-		printf( "Failed to load background texture image!\n" );
-		success = false;
-	}*/
-
-	gXOut = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
-	bpawn = SDL_LoadBMP( "04_key_presses/down.bmp" );
-	wpawn = SDL_LoadBMP( "04_key_presses/left.bmp" );
-	if( gXOut == NULL )
-	{
-		printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
-		success = false;
-	}
+    gXOut = SDL_LoadBMP( "03_event_driven_programming/x.bmp" );
+    bpawn = SDL_LoadBMP( "04_key_presses/white.bmp" );
+    wpawn = SDL_LoadBMP( "04_key_presses/black.bmp" );
+    if( gXOut == NULL )
+    {
+        printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
+        success = false;
+    }
     if(( bpawn == NULL )&&( wpawn == NULL ))
-	{
-		printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
-		success = false;
-	}
+    {
+        printf( "Unable to load image %s! SDL Error: %s\n", "03_event_driven_programming/x.bmp", SDL_GetError() );
+        success = false;
+    }
 
-	return success;
+    return success;
 }
 
 void close()
 {
-	SDL_FreeSurface( gXOut );
-	gXOut = NULL;
+    SDL_FreeSurface( gXOut );
+    gXOut = NULL;
 
-	SDL_DestroyWindow( gWindow );
-	gWindow = NULL;
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
 
-	SDL_Quit();
+    gFooTexture.free();
+    gBackgroundTexture.free();
+
+    //Destroy window
+    SDL_DestroyRenderer( gRenderer );
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+    gRenderer = NULL;
+
+    SDL_Quit();
 }
 
 
 int main(int argc,char **argv)
 {
     Bitboard bitboard;
-    int pos_x=0,pos_y=0,color=1;
+    int color=1;
     cout<<"First,or second?"<<endl;
     cin>>color;
     if(color!=0||color!=1)
     {
         color=1;
     }
-    while(!bitboard.endgame())
+    if(!init())
     {
-        /*cin>>pos_x>>pos_y;
-        if((pos_x<48||pos_x>55)||(pos_y<40||pos_y>47))
+        cout<<"Failed to initialize!"<<endl;
+    }
+    else
+    {
+        if( !loadMedia() )
         {
-            pos_x=48+i;
-            pos_y=40+i;
-            i+=1;
-            if(i>15)
-            {
-                i*=(-1);
-            }
-        }*/
-        if(!init())
-        {
-            /*Start SDL*/
-            cout<<"Failed to initialize!"<<endl;
+            cout<<"Failed to load media!"<<endl;
         }
         else
         {
-            if( !loadMedia() )
+            bool quit = false;
+            SDL_Event e;
+            while( !quit )
             {
-                cout<<"Failed to load media!"<<endl;
-            }
-            else
-            {
-                bool quit = false;
-                SDL_Event e;
-                while( !quit )
+                switch(e.type)
                 {
-                    while( SDL_PollEvent( &e ) != 0 )
-                    {
-                        if( e.type == SDL_QUIT )
+                    int x,y;
+                    case SDL_MOUSEMOTION:
+                        cout<<"@"<<endl;
+                        SDL_GetMouseState(&x,&y);
+                        x-=47;y-=47;
+                        if((x>0&&x<495)&&(y>0&&y<495))
                         {
-                            quit = true;
+                            x/=62;y/=62;
                         }
-                    }
-                    SDL_BlitSurface( gXOut, NULL, gScreenSurface, NULL );
-                    SDL_BlitSurface( bpawn, NULL, gScreenSurface, NULL );
-                    //SDL_BlitSurface( wpawn, NULL, gScreenSurface, NULL );
-                    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-                    SDL_RenderClear( gRenderer );
+                        cout<<x<<' '<<y<<endl;
 
-                    gBackgroundTexture.render( 0, 0 );
-
-                    gFooTexture.render( 240, 190 );
-
-                    SDL_RenderPresent( gRenderer );
-                    SDL_UpdateWindowSurface( gWindow );
-                    SDL_Delay( 20000 );
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                        cout<<"#"<<endl;
+                        SDL_GetMouseState(&x,&y);
+                        x-=47;y-=47;
+                        if((x>0&&x<495)&&(y>0&&y<495))
+                        {
+                            x/=62;y/=62;
+                        }
+                        cout<<x<<' '<<y<<endl;
+                        break;
+                    case SDL_MOUSEBUTTONUP:
+                        cout<<"*"<<endl;
+                        SDL_GetMouseState(&x,&y);
+                        x-=47;y-=47;
+                        if((x>0&&x<495)&&(y>0&&y<495))
+                        {
+                            x/=62;y/=62;
+                        }
+                        cout<<x<<' '<<y<<endl;
+                        break;
                 }
+                while( SDL_PollEvent( &e ) != 0 )
+                {
+                    if( e.type == SDL_QUIT )
+                    {
+                        quit = true;
+                    }
+                }
+                SDL_Rect source_rect[16];
+                for(int i=0; i<16; i++)
+                {
+                    if(i<8)
+                    {
+                        source_rect[i] = {-48-(i*63),-44,SCREEN_WIDTH,SCREEN_HEIGHT};
+                    }
+                    else
+                    {
+                        source_rect[i] = {-48-((i-8)*63),-107,SCREEN_WIDTH,SCREEN_HEIGHT};
+                    }
+                }
+
+                SDL_Rect source_rect_forb[16];
+                for(int i=0; i<16; i++)
+                {
+                    if(i<8)
+                    {
+                        source_rect_forb[i] = {-48-(63*i),-484,SCREEN_WIDTH,SCREEN_HEIGHT};
+                    }
+                    else
+                    {
+                        source_rect_forb[i] = {-48-(63*(i-8)),-420,SCREEN_WIDTH,SCREEN_HEIGHT};
+                    }
+                }
+                /**/
+                SDL_Rect dest_rect = {1,0,SCREEN_HEIGHT,SCREEN_WIDTH};
+                SDL_BlitSurface( gXOut, NULL, gScreenSurface, &dest_rect );
+                /**/
+                SDL_Surface* Wpawn[16],*Bpawn[16];
+                for(int i=0; i<16; i++)
+                {
+                    Wpawn[i] = SDL_LoadBMP( "sprite/white.bmp" );
+
+                    SDL_SetColorKey( Wpawn[i],SDL_TRUE, 0xFF00 );
+                    SDL_BlitSurface( Wpawn[i], &source_rect[i], gScreenSurface, NULL );
+                }
+                for(int i=0; i<16; i++)
+                {
+                    Bpawn[i] = SDL_LoadBMP( "sprite/black.bmp" );
+                    SDL_SetColorKey( Bpawn[i],SDL_TRUE, 0xFF00 );
+                    SDL_BlitSurface( Bpawn[i], &source_rect_forb[i], gScreenSurface, NULL );
+                }
+                SDL_UpdateWindowSurface( gWindow );
+                SDL_Delay( 30 );
             }
-        }
-        system("cls");
-        bitboard.make_move(pos_x,pos_y,color,bitboard);
-        if(color==0)
-        {
-            color=1;
-        }
-        else
-        {
-            color=0;
         }
     }
     close();
