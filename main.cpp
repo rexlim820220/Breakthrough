@@ -18,8 +18,11 @@ public:
     {
         whitepawn=0xffff000000000000;
         blackpawn=0x000000000000ffff;
+        xlicked=0;
+        ylicked=0;
     }
     Bitboard make_move(int,int,int,Bitboard);
+    void Click(int,int,SDL_Rect *,SDL_Rect *,SDL_Surface* Wpawn[],SDL_Surface* Bpawn[]);
     bool endgame();
     void showboard();
     float Evaulate(int color);
@@ -27,6 +30,7 @@ public:
 private:
     uint64_t whitepawn;
     uint64_t blackpawn;
+    int xlicked,ylicked;
 };
 
 Bitboard Bitboard::make_move(int x,int y,int color,Bitboard board)
@@ -168,6 +172,83 @@ SDL_Surface* gScreenSurface = NULL;
 SDL_Surface* gXOut = NULL;
 SDL_Surface* bpawn = NULL,* wpawn = NULL;
 SDL_Renderer *gRenderer = NULL;
+
+struct Position
+{
+    int x_pos;
+    int y_pos;
+};
+
+Position position[32];
+
+void Click_forw(SDL_Rect source_rect[],int x)
+{
+    SDL_Surface *w[16];
+    for(int i=0;i<8;i++)
+    {
+        if(i!=x)
+        {
+            w[i] = SDL_LoadBMP( "sprite/white.bmp" );
+            source_rect[i] = {-48-(63*i),-484,SCREEN_WIDTH,SCREEN_HEIGHT};
+            SDL_SetColorKey( w[i],SDL_TRUE, 0xFF00 );
+            SDL_BlitSurface( w[i] , &source_rect[i], gScreenSurface, NULL );
+        }
+    }
+    source_rect[x] = {-48-(63*x),-484,SCREEN_WIDTH,SCREEN_HEIGHT};
+    SDL_SetColorKey( w[x],SDL_TRUE, 0xFF00 );
+    SDL_BlitSurface( w[x] , &source_rect[x], gScreenSurface, NULL );
+}
+
+void Bitboard::Click(int x,int y,SDL_Rect *source_rect,SDL_Rect *source_rect_forb,SDL_Surface* Wpawn[],SDL_Surface* Bpawn[])
+{
+    xlicked=x;
+    ylicked=y;
+    cout<<"click"<<endl;
+    cout<<xlicked<<' '<<ylicked<<endl;
+    //xlicked-=47;
+    //ylicked-=47;
+    /*SDL_Surface *w = SDL_LoadBMP( "sprite/white.bmp" );
+    source_rect = {x,y,SCREEN_WIDTH,SCREEN_HEIGHT};
+    SDL_SetColorKey( w,SDL_TRUE, 0xFF00 );
+    //SDL_BlitSurface( w , &source_rect, gScreenSurface, NULL );
+    */
+    for(int i=0; i<8; i++)
+    {
+        position[i].x_pos=i;
+        position[i].y_pos=0;
+    }
+    for(int i=8; i<16; i++)
+    {
+        position[i].x_pos=(i-8);
+        position[i].y_pos=1;
+    }
+    for(int i=16; i<24; i++)
+    {
+        position[i].x_pos=(i-16);
+        position[i].y_pos=6;
+    }
+    for(int i=24; i<32; i++)
+    {
+        position[i].x_pos=(i-24);
+        position[i].y_pos=7;
+    }
+    for(int i=0; i<32; i++)
+    {
+        if((xlicked==position[i].x_pos)&&(ylicked==position[i].y_pos))
+        {
+            cout<<xlicked<<endl;
+        }
+    }
+    SDL_Rect dest_rect = {1,0,SCREEN_HEIGHT,SCREEN_WIDTH};
+    SDL_BlitSurface( gXOut, NULL, gScreenSurface, &dest_rect );
+    Click_forw(source_rect,xlicked);
+    if((xlicked<8&&xlicked>0)&&(ylicked<8&&ylicked>0))
+    {
+        source_rect_forb[xlicked] = {-48-(63*xlicked),-546+(ylicked*63),SCREEN_WIDTH,SCREEN_HEIGHT};
+        SDL_SetColorKey( Bpawn[xlicked],SDL_TRUE, 0xFF00 );
+        SDL_BlitSurface( Bpawn[xlicked] , &source_rect_forb[xlicked], gScreenSurface, NULL );
+    }
+}
 
 bool init()
 {
@@ -336,6 +417,49 @@ int main(int argc,char **argv)
         }
         else
         {
+            SDL_Rect source_rect[16];
+            for(int i=0; i<16; i++)
+            {
+                if(i<8)
+                {
+                    source_rect[i] = {-48-(i*63),-44,SCREEN_WIDTH,SCREEN_HEIGHT};
+                }
+                else
+                {
+                    source_rect[i] = {-48-((i-8)*63),-107,SCREEN_WIDTH,SCREEN_HEIGHT};
+                }
+            }
+
+            SDL_Rect source_rect_forb[16];
+            for(int i=0; i<16; i++)
+            {
+                if(i<8)
+                {
+                    source_rect_forb[i] = {-48-(63*i),-484,SCREEN_WIDTH,SCREEN_HEIGHT};
+                }
+                else
+                {
+                    source_rect_forb[i] = {-48-(63*(i-8)),-420,SCREEN_WIDTH,SCREEN_HEIGHT};
+                }
+            }
+            /**/
+            SDL_Rect dest_rect = {1,0,SCREEN_HEIGHT,SCREEN_WIDTH};
+            SDL_BlitSurface( gXOut, NULL, gScreenSurface, &dest_rect );
+            /**/
+            SDL_Surface* Wpawn[16],*Bpawn[16];
+            for(int i=0; i<16; i++)
+            {
+                Wpawn[i] = SDL_LoadBMP( "sprite/white.bmp" );
+
+                SDL_SetColorKey( Wpawn[i],SDL_TRUE, 0xFF00 );
+                SDL_BlitSurface( Wpawn[i], &source_rect[i], gScreenSurface, NULL );
+            }
+            for(int i=0; i<16; i++)
+            {
+                Bpawn[i] = SDL_LoadBMP( "sprite/black.bmp" );
+                SDL_SetColorKey( Bpawn[i],SDL_TRUE, 0xFF00 );
+                SDL_BlitSurface( Bpawn[i], &source_rect_forb[i], gScreenSurface, NULL );
+            }
             bool quit = false;
             SDL_Event e;
             while( !quit )
@@ -343,87 +467,51 @@ int main(int argc,char **argv)
                 switch(e.type)
                 {
                     int x,y;
-                    case SDL_MOUSEMOTION:
-                        cout<<"@"<<endl;
-                        SDL_GetMouseState(&x,&y);
-                        x-=47;y-=47;
-                        if((x>0&&x<495)&&(y>0&&y<495))
-                        {
-                            x/=62;y/=62;
-                        }
-                        cout<<x<<' '<<y<<endl;
-
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        cout<<"#"<<endl;
-                        SDL_GetMouseState(&x,&y);
-                        x-=47;y-=47;
-                        if((x>0&&x<495)&&(y>0&&y<495))
-                        {
-                            x/=62;y/=62;
-                        }
-                        cout<<x<<' '<<y<<endl;
-                        break;
-                    case SDL_MOUSEBUTTONUP:
-                        cout<<"*"<<endl;
-                        SDL_GetMouseState(&x,&y);
-                        x-=47;y-=47;
-                        if((x>0&&x<495)&&(y>0&&y<495))
-                        {
-                            x/=62;y/=62;
-                        }
-                        cout<<x<<' '<<y<<endl;
-                        break;
+                case SDL_MOUSEMOTION:
+                    cout<<"@"<<endl;
+                    SDL_GetMouseState(&x,&y);
+                    x-=47;
+                    y-=47;
+                    if((x>0&&x<495)&&(y>0&&y<495))
+                    {
+                        x/=62;
+                        y/=62;
+                    }
+                    cout<<x<<' '<<y<<endl;
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    cout<<"#"<<endl;
+                    SDL_GetMouseState(&x,&y);
+                    x-=47;
+                    y-=47;
+                    if((x>0&&x<495)&&(y>0&&y<495))
+                    {
+                        x/=62;
+                        y/=62;
+                    }
+                    cout<<x<<' '<<y<<endl;
+                    bitboard.Click(x,y,source_rect,source_rect_forb,Wpawn,Bpawn);
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    cout<<"*"<<endl;
+                    SDL_GetMouseState(&x,&y);
+                    x-=47;
+                    y-=47;
+                    if((x>0&&x<495)&&(y>0&&y<495))
+                    {
+                        x/=62;
+                        y/=62;
+                    }
+                    cout<<x<<' '<<y<<endl;
+                    break;
                 }
+                //for mouse click event
                 while( SDL_PollEvent( &e ) != 0 )
                 {
                     if( e.type == SDL_QUIT )
                     {
                         quit = true;
                     }
-                }
-                SDL_Rect source_rect[16];
-                for(int i=0; i<16; i++)
-                {
-                    if(i<8)
-                    {
-                        source_rect[i] = {-48-(i*63),-44,SCREEN_WIDTH,SCREEN_HEIGHT};
-                    }
-                    else
-                    {
-                        source_rect[i] = {-48-((i-8)*63),-107,SCREEN_WIDTH,SCREEN_HEIGHT};
-                    }
-                }
-
-                SDL_Rect source_rect_forb[16];
-                for(int i=0; i<16; i++)
-                {
-                    if(i<8)
-                    {
-                        source_rect_forb[i] = {-48-(63*i),-484,SCREEN_WIDTH,SCREEN_HEIGHT};
-                    }
-                    else
-                    {
-                        source_rect_forb[i] = {-48-(63*(i-8)),-420,SCREEN_WIDTH,SCREEN_HEIGHT};
-                    }
-                }
-                /**/
-                SDL_Rect dest_rect = {1,0,SCREEN_HEIGHT,SCREEN_WIDTH};
-                SDL_BlitSurface( gXOut, NULL, gScreenSurface, &dest_rect );
-                /**/
-                SDL_Surface* Wpawn[16],*Bpawn[16];
-                for(int i=0; i<16; i++)
-                {
-                    Wpawn[i] = SDL_LoadBMP( "sprite/white.bmp" );
-
-                    SDL_SetColorKey( Wpawn[i],SDL_TRUE, 0xFF00 );
-                    SDL_BlitSurface( Wpawn[i], &source_rect[i], gScreenSurface, NULL );
-                }
-                for(int i=0; i<16; i++)
-                {
-                    Bpawn[i] = SDL_LoadBMP( "sprite/black.bmp" );
-                    SDL_SetColorKey( Bpawn[i],SDL_TRUE, 0xFF00 );
-                    SDL_BlitSurface( Bpawn[i], &source_rect_forb[i], gScreenSurface, NULL );
                 }
                 SDL_UpdateWindowSurface( gWindow );
                 SDL_Delay( 30 );
