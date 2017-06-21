@@ -27,22 +27,22 @@ int main(int argc,char **argv)
             int chessnum=16,click=0,no=-1,NO=8,tmp=0;
             vector<pair<int,int>>black(chessnum);
             vector<pair<int,int>>white(chessnum);
-            for(int i=0;i<8;i++)
+            for(int i=0; i<8; i++)
             {
                 white[i].first=i;
                 white[i].second=0;
             }
-            for(int i=8;i<16;i++)
+            for(int i=8; i<16; i++)
             {
                 white[i].first=(i-8);
                 white[i].second=1;
             }
-            for(int j=0;j<8;j++)
+            for(int j=0; j<8; j++)
             {
                 black[j].first=j;
                 black[j].second=6;
             }
-            for(int j=8;j<16;j++)
+            for(int j=8; j<16; j++)
             {
                 black[j].first=(j-8);
                 black[j].second=7;
@@ -58,35 +58,54 @@ int main(int argc,char **argv)
                 SDL_Event e;
                 while(!quit)
                 {
-                    bool turn=false;
+                    bool turn = true;
                     int x=0,y=0;
-                    switch(e.type)
+                    if(turn)
                     {
-                    case SDL_MOUSEMOTION:
-                        getlocation(&x,&y);
-                        turn=false;
-                        break;
-                    case SDL_MOUSEBUTTONDOWN:
-                        ++click;
-                        getlocation(&x,&y);
-                        no = bitboard.Click(black_pawn,black,x,y);
-                        if(no>=0&&no<16){turn=true;tmp=no;state=FiniteState::Select;}
-                        cout<<no<<endl;
-                        if((no<0)&&state==FiniteState::Select){bitboard.MoveBlack(black_pawn,black,bitboard,tmp,x,y);}
-                        break;
-                    case SDL_MOUSEBUTTONUP:
-                        getlocation(&x,&y);
-                        if(turn&&NO<16){
+                        switch(e.type)
+                        {
+                        case SDL_MOUSEMOTION:
+                            getlocation(&x,&y);
+                            break;
+                        case SDL_MOUSEBUTTONDOWN:
+                            ++click;
+                            getlocation(&x,&y);
+                            no = bitboard.Click(black_pawn,black,x,y,bitboard).no;
+                            if(no>=0&&no<16)
+                            {
+                                turn=true;
+                                tmp=no;
+                                state=FiniteState::Select;
+                            }
+                            cout<<no<<endl;
+                            if((no<0)&&state==FiniteState::Select)
+                            {
+                                bitboard.MoveBlack(black_pawn,black,bitboard,tmp,x,y);
+                                state = FiniteState::Initial;
+                                turn = false;
+                            }
+                            break;
+                        case SDL_MOUSEBUTTONUP:
+                            getlocation(&x,&y);
+                            break;
+                        }
+                    }
+                    if(turn == false)
+                    {
+                        if(NO<16)
+                        {
                             bitboard.MoveWhite(white_pawn,white,bitboard,NO);
                             NO++;
-                            if(NO==16){NO=0;}
+                            if(NO==16)
+                            {
+                                NO=0;
+                            }
                         }
-                        turn=false;
-                        break;
                     }
                     loadbackground();
                     loadwhitepawn(white_pawn);
                     loadblackpawn(black_pawn,click,no);
+                    // = renderercopy(,,,,);
                     while(SDL_PollEvent(&e)!=0)
                     {
                         if(e.type==SDL_QUIT)

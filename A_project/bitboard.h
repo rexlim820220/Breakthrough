@@ -3,6 +3,16 @@
 #include <utility>
 #include <vector>
 
+struct Word{
+    int a;
+    int b;
+};
+
+struct Information{
+    int no;
+    int each_bit_movable;
+};
+
 class Bitboard{
 public:
     Bitboard();
@@ -10,11 +20,11 @@ public:
     float Evaluation(Bitboard,int);
     int whiteAB(Bitboard,int,int,int);
     int blackAB(Bitboard,int,int,int);
-    void MoveWhite(SDL_Rect *,std::vector<std::pair<int,int>>&,Bitboard,int);
-    void MoveBlack(SDL_Rect *,std::vector<std::pair<int,int>>&,Bitboard,int,int,int);
-    int Click(SDL_Rect *,std::vector<std::pair<int,int>>&,int,int);
-    unsigned long long whitemask(int,int);
-    unsigned long long blackmask(int,int);
+    void MoveWhite(SDL_Rect *,std::vector<std::pair<int,int>>&,const Bitboard&,const int&);
+    void MoveBlack(SDL_Rect *,std::vector<std::pair<int,int>>&,const Bitboard&,const int&,const int&,const int&);
+    Information Click(SDL_Rect *,std::vector<std::pair<int,int>>&,const int&,const int&,const Bitboard&);
+    unsigned long long whitemask(const int&,const int&)const;
+    unsigned long long blackmask(const int&,const int&)const;
     ~Bitboard();
 private:
     unsigned long long whitepawn;

@@ -108,13 +108,17 @@ int Bitboard::blackAB(Bitboard bitboard,int alpha,int beta,int depth)
     return alpha;
 }
 
-void Bitboard::MoveWhite(SDL_Rect white_pawn[],std::vector<std::pair<int,int>>&white,Bitboard bitboard,int No)
+void Bitboard::MoveWhite(SDL_Rect white_pawn[],std::vector<std::pair<int,int>>&white,const Bitboard &bitboard,const int &No)
 {
+    //bitboard.whiteAB(bitboard);
+    //int alpha = bitboard.whiteAB(bitboard,-100,100,5);
+    //int color= wite;
+    //int value = 0;
     if(No>7){white_pawn[No] = {-48-((No-8)*63),-170,SCREEN_WIDTH,SCREEN_HEIGHT};}
     else{white_pawn[No] = {-48-((No)*63),-107,SCREEN_WIDTH,SCREEN_HEIGHT};}
 }
 
-int Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,int x,int y)
+Information Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,const int &x,const int &y,const Bitboard &bitboard)
 {
     int state=FiniteState::Initial,no=-100;
     for(int i=0; i<16; i++)
@@ -123,25 +127,35 @@ int Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,
         {
             no=i;
             state=FiniteState::Select;
-            //std::cout<<no<<std::endl;
             break;
         }
     }
+    unsigned long long mov = bitboard.blackmask(x,y);
+    mov &= (~bitboard.blackpawn);
+    int length = __builtin_popcountll(bitboard.blackmask(x,y));
+    std::vector<int>position(length);
+    for(int i=0;i<__builtin_popcountll(bitboard.blackmask(x,y));i++)
+    {
+        unsigned long long firstzero = 0x0000000000000001<<__builtin_ctzll(mov);
+        mov ^= firstzero;
+        position[i] = __builtin_ctzll(mov);
+    }
+
     if((state==FiniteState::Initial)&&(no>-1))
     {
         black_pawn[no] = {convert_x(x),convert_y(y),SCREEN_WIDTH,SCREEN_HEIGHT};
     }
-    return no;
+    return {no,__builtin_ctz(mov)};
 }
 
-void Bitboard::MoveBlack(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,Bitboard bitboard,int BlackID,int x,int y)
+void Bitboard::MoveBlack(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,const Bitboard &bitboard,const int &BlackID,const int &x,const int &y)
 {
     black_pawn[(BlackID+8)%16] = {-48-(x*63),-44-(y*63),SCREEN_WIDTH,SCREEN_HEIGHT};
     black[BlackID].first = x;
     black[BlackID].second = y;
 }
 
-unsigned long long Bitboard::whitemask(int x,int y)
+unsigned long long Bitboard::whitemask(const int &x,const int &y)const
 {
     unsigned long long mask[64] = {0x0000000000000000};
     std::pair<int,int>wlocation[64];
@@ -270,7 +284,7 @@ unsigned long long Bitboard::whitemask(int x,int y)
     return mask[chosen];
 }
 
-unsigned long long Bitboard::blackmask(int x,int y)
+unsigned long long Bitboard::blackmask(const int &x,const int &y)const
 {
     unsigned long long mask[64] = {0x0000000000000000};
     std::pair<int,int>blocation[64];
