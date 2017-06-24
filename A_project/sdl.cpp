@@ -120,6 +120,18 @@ void loadblackpawn(SDL_Rect black_pawn[],int click,int no)
     }
 }
 
+void reloaedwhitepawn(SDL_Renderer *renderer)
+{
+    //SDL_Texture *variable = IMG_LOADtexture(renderer,"canvas/white.bmp");
+    //SDL_Rect dst;
+    //SDL_RenderCopy(renderer,variable,NULL,&dst);
+}
+
+void reloadblackpawn(SDL_Rect *,int,int)
+{
+
+}
+
 void getlocation(int *x,int *y)
 {
     SDL_GetMouseState(x,y);
@@ -157,6 +169,205 @@ int convert_y(int y)
         }
     }
     return y_;
+}
+
+void change(int No,int *a,int *b)
+{
+    switch(No)
+    {
+        case 0:
+            *a=0;*b=0;
+            break;
+        case 1:
+            *a=1;*b=0;
+            break;
+        case 2:
+            *a=2;*b=0;
+            break;
+        case 3:
+            *a=3;*b=0;
+            break;
+        case 4:
+            *a=4;*b=0;
+            break;
+        case 5:
+            *a=5;*b=0;
+            break;
+        case 6:
+            *a=6;*b=0;
+            break;
+        case 7:
+            *a=7;*b=0;
+            break;
+        case 8:
+            *a=0;*b=1;
+            break;
+        case 9:
+            *a=1;*b=1;
+            break;
+        case 10:
+            *a=2;*b=1;
+            break;
+        case 11:
+            *a=3;*b=1;
+            break;
+        case 12:
+            *a=4;*b=1;
+            break;
+        case 13:
+            *a=5;*b=1;
+            break;
+        case 14:
+            *a=6;*b=1;
+            break;
+        case 15:
+            *a=7;*b=1;
+            break;
+        case 16:
+            *a=0;*b=2;
+            break;
+        case 17:
+            *a=1;*b=2;
+            break;
+        case 18:
+            *a=2;*b=2;
+            break;
+        case 19:
+            *a=3;*b=2;
+            break;
+        case 20:
+            *a=4;*b=2;
+            break;
+        case 21:
+            *a=5;*b=2;
+            break;
+        case 22:
+            *a=6;*b=2;
+            break;
+        case 23:
+            *a=7;*b=2;
+            break;
+        case 24:
+            *a=0;*b=3;
+            break;
+        case 25:
+            *a=1;*b=3;
+            break;
+        case 26:
+            *a=2;*b=3;
+            break;
+        case 27:
+            *a=3;*b=3;
+            break;
+        case 28:
+            *a=4;*b=3;
+            break;
+        case 29:
+            *a=5;*b=3;
+            break;
+        case 30:
+            *a=6;*b=3;
+            break;
+        case 31:
+            *a=7;*b=3;
+            break;
+        case 32:
+            *a=0;*b=4;
+            break;
+        case 33:
+            *a=1;*b=4;
+            break;
+        case 34:
+            *a=2;*b=4;
+            break;
+        case 35:
+            *a=3;*b=4;
+            break;
+        case 36:
+            *a=4;*b=4;
+            break;
+        case 37:
+            *a=5;*b=4;
+            break;
+        case 38:
+            *a=6;*b=4;
+            break;
+        case 39:
+            *a=7;*b=4;
+            break;
+        case 40:
+            *a=0;*b=5;
+            break;
+        case 41:
+            *a=1;*b=5;
+            break;
+        case 42:
+            *a=2;*b=5;
+            break;
+        case 43:
+            *a=3;*b=5;
+            break;
+        case 44:
+            *a=4;*b=5;
+            break;
+        case 45:
+            *a=5;*b=5;
+            break;
+        case 46:
+            *a=6;*b=5;
+            break;
+        case 47:
+            *a=7;*b=5;
+            break;
+        case 48:
+            *a=0;*b=6;
+            break;
+        case 49:
+            *a=1;*b=6;
+            break;
+        case 50:
+            *a=2;*b=6;
+            break;
+        case 51:
+            *a=3;*b=6;
+            break;
+        case 52:
+            *a=4;*b=6;
+            break;
+        case 53:
+            *a=5;*b=6;
+            break;
+        case 54:
+            *a=6;*b=6;
+            break;
+        case 55:
+            *a=7;*b=6;
+            break;
+        case 56:
+            *a=0;*b=7;
+            break;
+        case 57:
+            *a=1;*b=7;
+            break;
+        case 58:
+            *a=2;*b=7;
+            break;
+        case 59:
+            *a=3;*b=7;
+            break;
+        case 60:
+            *a=4;*b=7;
+            break;
+        case 61:
+            *a=5;*b=7;
+            break;
+        case 62:
+            *a=6;*b=7;
+            break;
+        case 63:
+            *a=7;*b=7;
+            break;
+    }
 }
 
 void close()

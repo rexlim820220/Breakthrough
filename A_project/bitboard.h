@@ -21,6 +21,7 @@ public:
     int whiteAB(Bitboard,int,int,int);
     int blackAB(Bitboard,int,int,int);
     void MoveWhite(SDL_Rect *,std::vector<std::pair<int,int>>&,const Bitboard&,const int&);
+    int RandMakeMove(SDL_Rect *,Bitboard&,int No)const;
     void MoveBlack(SDL_Rect *,std::vector<std::pair<int,int>>&,const Bitboard&,const int&,const int&,const int&);
     Information Click(SDL_Rect *,std::vector<std::pair<int,int>>&,const int&,const int&,const Bitboard&);
     unsigned long long whitemask(const int&,const int&)const;

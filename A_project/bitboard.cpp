@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include <cmath>
 #include <cstdlib>
 #include <vector>
@@ -10,22 +11,22 @@
 
 Bitboard::Bitboard()
 {
-    whitepawn=0xffff000000000000;
-    blackpawn=0x000000000000ffff;
+    whitepawn=0x000000000000ffff;
+    blackpawn=0xffff000000000000;
 }
 
 bool Bitboard::endgame()
 {
     for(int i=56; i<64; i++)
     {
-        if((blackpawn&(1ll<<i))!=0)
+        if((whitepawn&(1ll<<i))!=0)
         {
             return true;
         }
     }
     for(int i=0; i<8; i++)
     {
-        if((whitepawn&(1ll<<i))!=0)
+        if((blackpawn&(1ll<<i))!=0)
         {
             return true;
         }
@@ -55,6 +56,7 @@ float Bitboard::Evaluation(Bitboard bitboard,int depth)
             {
                 value+=pow(i,2);
                 no=i;
+                bitboard.whiteAB(bitboard,-100,100,5);
                 //break;
             }
         }
@@ -110,12 +112,35 @@ int Bitboard::blackAB(Bitboard bitboard,int alpha,int beta,int depth)
 
 void Bitboard::MoveWhite(SDL_Rect white_pawn[],std::vector<std::pair<int,int>>&white,const Bitboard &bitboard,const int &No)
 {
-    //bitboard.whiteAB(bitboard);
-    //int alpha = bitboard.whiteAB(bitboard,-100,100,5);
-    //int color= wite;
-    //int value = 0;
     if(No>7){white_pawn[No] = {-48-((No-8)*63),-170,SCREEN_WIDTH,SCREEN_HEIGHT};}
     else{white_pawn[No] = {-48-((No)*63),-107,SCREEN_WIDTH,SCREEN_HEIGHT};}
+}
+
+int Bitboard::RandMakeMove(SDL_Rect white_pawn[],Bitboard &bitboard,int No)const
+{
+    int a=0,b=0;
+    change(No,&a,&b);
+    while((bitboard.whitemask(a,b)&bitboard.whitepawn)!=0)
+    {
+        No = rand()%16;
+        change(No,&a,&b);
+    }
+    unsigned long long temp = 0x0000000000000001;
+    temp <<= 7;
+    for(int i=1;i<8;i++)
+    {
+        if( i == (No / 8))
+        {
+            temp <<= ((i+1)*8-No);
+        }
+    }
+    bitboard.whitepawn ^= temp;
+    temp <<= 8;
+    bitboard.whitepawn |= temp;
+    std::cout<<"bitboard.whitepawn="<<bitboard.whitepawn<<std::endl;
+    b+=1;
+    white_pawn[No] = {-48-(a*63),-44-(b*63),SCREEN_WIDTH,SCREEN_HEIGHT};
+    return No;
 }
 
 Information Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,const int &x,const int &y,const Bitboard &bitboard)
@@ -134,9 +159,10 @@ Information Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>
     mov &= (~bitboard.blackpawn);
     int length = __builtin_popcountll(bitboard.blackmask(x,y));
     std::vector<int>position(length);
+    unsigned long long firstzero = 0x0000000000000001;
     for(int i=0;i<__builtin_popcountll(bitboard.blackmask(x,y));i++)
     {
-        unsigned long long firstzero = 0x0000000000000001<<__builtin_ctzll(mov);
+        firstzero <<= __builtin_ctzll(mov);
         mov ^= firstzero;
         position[i] = __builtin_ctzll(mov);
     }
@@ -150,9 +176,23 @@ Information Bitboard::Click(SDL_Rect black_pawn[],std::vector<std::pair<int,int>
 
 void Bitboard::MoveBlack(SDL_Rect black_pawn[],std::vector<std::pair<int,int>>&black,const Bitboard &bitboard,const int &BlackID,const int &x,const int &y)
 {
+    unsigned long long picked_pawn = 0x8000000000000000;
+    int a=x,b=y;
+    change(no,&a,&b);
+    std::cout<<"a="<<a<<' '<<"b="<<b<<std::endl;
+    picked_pawn >>= a;
+    if(b == 6){picked_pawn >>= 7;}
     black_pawn[(BlackID+8)%16] = {-48-(x*63),-44-(y*63),SCREEN_WIDTH,SCREEN_HEIGHT};
     black[BlackID].first = x;
     black[BlackID].second = y;
+    if(black[BlackID].first==x){picked_pawn >>= 8;}
+    else if(black[BlackID].first<x){
+        picked_pawn >>= 7;
+    }
+    else{
+        picked_pawn >>= 9;
+    }
+    std::cout<<"bitboard.blackpawn="<<picked_pawn<<std::endl;
 }
 
 unsigned long long Bitboard::whitemask(const int &x,const int &y)const

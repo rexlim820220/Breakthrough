@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1498044750 source:c:\users\asus\desktop\new\main.cpp
+1498306805 source:c:\users\asus\desktop\new\main.cpp
 	<iostream>
 	<vector>
 	<utility>
+	<ctime>
 	<SDL2/SDL.h>
 	"bitboard.h"
 	"sdl.h"
@@ -326,12 +327,13 @@
 	"begin_code.h"
 	"close_code.h"
 
-1498051123 c:\users\asus\desktop\new\bitboard.h
+1498307140 c:\users\asus\desktop\new\bitboard.h
 	<utility>
 	<vector>
 
-1498048069 source:c:\users\asus\desktop\new\bitboard.cpp
+1498305133 source:c:\users\asus\desktop\new\bitboard.cpp
 	<iostream>
+	<ctime>
 	<cmath>
 	<cstdlib>
 	<vector>
@@ -341,9 +343,9 @@
 	"bitboard.h"
 	"sdl.h"
 
-1497792202 c:\users\asus\desktop\new\sdl.h
+1498145569 c:\users\asus\desktop\new\sdl.h
 
-1497963622 source:c:\users\asus\desktop\new\sdl.cpp
+1498145925 source:c:\users\asus\desktop\new\sdl.cpp
 	<SDL2/SDL.h>
 	<cstdio>
 	<iostream>

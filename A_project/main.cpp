@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <ctime>
 #include <SDL2/SDL.h>
 #include "bitboard.h"
 #include "sdl.h"
@@ -24,7 +25,7 @@ int main(int argc,char **argv)
         {
             SDL_Rect white_pawn[16];
             SDL_Rect black_pawn[16];
-            int chessnum=16,click=0,no=-1,NO=8,tmp=0;
+            int chessnum=16,click=0,no=-1,tmp=0,u=0;
             vector<pair<int,int>>black(chessnum);
             vector<pair<int,int>>white(chessnum);
             for(int i=0; i<8; i++)
@@ -47,6 +48,7 @@ int main(int argc,char **argv)
                 black[j].first=(j-8);
                 black[j].second=7;
             }
+            vector<int>w;
             set_white_position(white_pawn);
             set_black_position(black_pawn);
             loadbackground();
@@ -80,9 +82,16 @@ int main(int argc,char **argv)
                             cout<<no<<endl;
                             if((no<0)&&state==FiniteState::Select)
                             {
-                                bitboard.MoveBlack(black_pawn,black,bitboard,tmp,x,y);
-                                state = FiniteState::Initial;
-                                turn = false;
+                                if((x>=0&&x<8)&&(y>=0&&y<8))
+                                {
+                                    bitboard.MoveBlack(black_pawn,black,bitboard,tmp,x,y);
+                                    state = FiniteState::Initial;
+                                    turn = false;
+                                }
+                                else{
+                                    state = FiniteState::Select;
+                                    turn = true;
+                                }
                             }
                             break;
                         case SDL_MOUSEBUTTONUP:
@@ -92,20 +101,20 @@ int main(int argc,char **argv)
                     }
                     if(turn == false)
                     {
-                        if(NO<16)
+                        srand(time(NULL));
+                        int No = rand()%16;
+                        for(unsigned int i=0;i<w.size();i++)
                         {
-                            bitboard.MoveWhite(white_pawn,white,bitboard,NO);
-                            NO++;
-                            if(NO==16)
-                            {
-                                NO=0;
+                            if(No==w[i]){
+                                system("cls");
                             }
                         }
+                        w.push_back(bitboard.RandMakeMove(white_pawn,bitboard,No));
+                        u++;
                     }
                     loadbackground();
                     loadwhitepawn(white_pawn);
                     loadblackpawn(black_pawn,click,no);
-                    // = renderercopy(,,,,);
                     while(SDL_PollEvent(&e)!=0)
                     {
                         if(e.type==SDL_QUIT)
